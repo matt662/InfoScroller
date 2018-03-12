@@ -223,6 +223,10 @@ class matrixPrinter(threading.Thread):
         for row in range(8):
             for ascii in inputarray:
                 # get the width of the character from the first element of the font variable
+                try:
+                    fontv.array[ascii]
+                except IndexError:
+                    ascii = 0
                 width=fontv.array[ascii][0]
                 #get the binary representation of the charatcter at that row
                 binary='{0:{fill}{align}{width}{base}}'.format(fontv.array[ascii][row+1],base='b',fill='0',align='>',width=width)
