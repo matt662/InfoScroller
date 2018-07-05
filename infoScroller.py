@@ -61,7 +61,7 @@ class data_fetcher(threading.Thread):
                 message = {'travel': {'time': duration, 'summary': summary,
                                       'seconds': directions_result[0]["legs"][0]["duration_in_traffic"]['value']}}
                 self.q.put(message)
-                logging.info('Time to work: ' + mention)
+                logging.debug('Time to work: ' + mention)
             except(googlemaps.exceptions.ApiError, googlemaps.exceptions.HTTPError, googlemaps.exceptions.Timeout,
                    googlemaps.exceptions.TransportError):
                 logging.warn('Maps Error')
@@ -135,7 +135,7 @@ class matrixPrinter(threading.Thread):
             if travel is not None and (time(7, 30) <= datetime.now().time() <= time(9, 0)) and (
                     datetime.now().isoweekday() in range(1, 6)):
                 text = 'Drive: ' + travel['time']
-                logging.info(text)
+                logging.debug(text)
                 value = travel['seconds']
                 if value < 1800:
                     color = 2
@@ -151,7 +151,7 @@ class matrixPrinter(threading.Thread):
                 if 'artist' in previousMessage['now_playing']:
                     now_playing += ' >By: ' + previousMessage['now_playing']['artist']
                 color = 2
-                logging.info(now_playing)
+                logging.debug(now_playing)
                 self.updatescrollmatrix(now_playing, color, 0.006, 2)
             ldp.clear()
 
