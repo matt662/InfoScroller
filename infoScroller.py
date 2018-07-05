@@ -17,12 +17,25 @@ import fontv
 import logging
 import traceback
 import pychromecast
+import argparse
 from ConfigParser import SafeConfigParser
 
 parser = SafeConfigParser()
 parser.read('config.ini')
 
-logging.basicConfig(level=logging.INFO)
+argparser = argparse.ArgumentParser(
+    description="Display various information on LED Matrix Display"
+)
+argparser.add_argument("--log", help="Set logging level")
+args = argparser.parse_args()
+logLevel = "INFO"
+if args.log:
+    logLevel = args.log
+
+numeric_level = getattr(logging, logLevel.upper(), None)
+if not isinstance(numeric_level, int):
+    raise ValueError('Invalid log level: %s' % logLevel)
+logging.basicConfig(level=numeric_level)
 messageQueue = queue.Queue()
 
 gmaps = googlemaps.Client(key=parser.get('google_maps', 'key'))
