@@ -87,7 +87,7 @@ class data_fetcher(threading.Thread):
             except:
                 logging.warn('General Error on Twitter Fetch')
                 traceback.print_exc()
-            for i in range(69):
+            for i in range(150):
                 if interrupt:
                     logging.info('end received for fetch')
                     break
